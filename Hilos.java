@@ -57,18 +57,22 @@ public class Hilos {
 		public void run() {
 			// TODO Auto-generated method stub
 			
-			for (int i=1; i<=3000; i++){
+			//for (int i=1; i<=3000; i++){
 				
+			while(!Thread.interrupted()) {
 				pelota.mueve_pelota(componente.getBounds());
 				
 				componente.paint(componente.getGraphics());
 				
-				try {
+				/*try {
 					Thread.sleep(4);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					//e.printStackTrace();
+					
+					System.out.println("Hilo bloqueado. imposible interrumpir");
+					//System.exit(0);
+				}*/
 				
 			}
 			
@@ -212,6 +216,16 @@ public class Hilos {
 					
 				});
 				
+				ponerBoton(laminaBotones, "Detener", new ActionListener(){
+					
+					public void actionPerformed(ActionEvent evento){
+						
+						detener();
+						
+					}
+					
+				});
+				
 				add(laminaBotones, BorderLayout.SOUTH);
 			}
 			
@@ -239,7 +253,9 @@ public class Hilos {
 					
 					Runnable r=new PelotaHilos(pelota,lamina);
 					
-					Thread t=new Thread(r);
+					//Thread t=new Thread(r);
+					
+					t=new Thread(r);
 					
 					t.start();
 					
@@ -247,6 +263,16 @@ public class Hilos {
 				
 			}
 			
+			public void detener() {
+				
+				//t.stop();
+				
+				t.interrupt();
+				
+			}
+			
 			private LaminaPelota lamina;
+			
+			Thread t;
 
 		}
